@@ -9,6 +9,7 @@ set(SDL2_dir "${CMAKE_SOURCE_DIR}/external/SDL2")
 add_executable(Learn_Opengl 
             src/main.cpp
             src/Screen.cpp
+            src/Input.cpp
             )
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)

@@ -3,10 +3,12 @@
 #include <gl/GL.h>
 #include <iostream>
 
-#include "screen.h"
+#include "Screen.h"
+#include "Input.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
+Input * input = Input::Instance();
 
 
 int main(int argc, char* argv[]){
@@ -15,30 +17,56 @@ int main(int argc, char* argv[]){
 
     // =================================
     
+    float x_pos = 0;
+    float y_pos = 0;
+
     while (isAppRunning){
 
         screen->ClearScreen();
+        input->Update();
 
-//render a quad the OLD way
-glBegin(GL_QUADS);
+        // Processing Input - Separate function
+        isAppRunning = !input->IsXClicked();
+        if (input->IsKeyPressed()) {
+            char key_pressed = input->GetKeyDown();
+            if (key_pressed == SDLK_a){
+                x_pos -= 0.001f;
+            }
+            else if (key_pressed == SDLK_d){
+                x_pos += 0.001f;
+            }
+            else if (key_pressed == SDLK_s){
+                y_pos -= 0.001f;
+            }
+            else if (key_pressed == SDLK_w){
+                y_pos += 0.001f;
+            }
+            else if (key_pressed == SDLK_ESCAPE){
+                isAppRunning = false;
+            } 
+        }
 
-//top left color and vertex of quad
-glColor3f(1, 0,0);
-glVertex3f(-0.5f, 0.5f, 0.0f);
 
-//top right color and vertex of quad
-glColor3f(0,1,0);
-glVertex3f(0.5f,0.5f,0.0f);
+        //render a quad the OLD way
+        glBegin(GL_QUADS);
 
-//bottom right color and vertex of quad
-glColor3f(0,0,1);
-glVertex3f(0.5f, -0.5f,0.0f);
+            //top left color and vertex of quad
+            glColor3f(1, 0,0);
+            glVertex3f(x_pos - 0.5f, y_pos + 0.5f, 0.0f);
 
-//bottom left color and vertex of quad
-glColor3f(0,0,1);
-glVertex3f(-0.5f, -0.5f,0.0f);
+            //top right color and vertex of quad
+            glColor3f(0,1,0);
+            glVertex3f(x_pos + 0.5f, y_pos + 0.5f, 0.0f);
 
-glEnd();
+            //bottom right color and vertex of quad
+            glColor3f(0,0,1);
+            glVertex3f(x_pos + 0.5f, y_pos  - 0.5f, 0.0f);
+
+            //bottom left color and vertex of quad
+            glColor3f(0,0,1);
+            glVertex3f(x_pos - 0.5f, y_pos  - 0.5f, 0.0f);
+
+        glEnd();
 
 
 
