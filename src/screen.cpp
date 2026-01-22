@@ -52,6 +52,12 @@ bool Screen::Initialize()
         std::cout << "Error creating OpenGL Ontext." << std :: endl;
         return false;
     }
+
+    if (!gladLoadGL()){
+        std::cout << "Error loading Glad Extensions for Opengl." << std :: endl;
+        return false;
+    }
+
     return true;
 }
 

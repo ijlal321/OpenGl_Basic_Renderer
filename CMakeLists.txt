@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.15)
-project(Learn_Opengl LANGUAGES CXX)
+project(Learn_Opengl LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+##  Variables Definition
+# ==========================================
 set(SDL2_dir "${CMAKE_SOURCE_DIR}/external/SDL2")
 
+
+##  Main Project Files
+# ==========================================
 add_executable(Learn_Opengl 
             src/main.cpp
             src/Screen.cpp
@@ -14,14 +19,22 @@ add_executable(Learn_Opengl
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-# Installing SDL2 and Linking Opengl 
+
+## Adding Glad Files for Opengl Extensions
+# ==========================================
+target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include)
+# target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/external/include/KHR)
+target_sources(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
+
+
+##  Installing SDL2 and Linking Opengl 
+# ==========================================
 target_include_directories(Learn_Opengl PUBLIC ${SDL2_dir}/include)
 target_link_libraries(Learn_Opengl PUBLIC 
             ${SDL2_dir}/lib/x64/SDL2.lib
             ${SDL2_dir}/lib/x64/SDL2main.lib
             opengl32
             )
-
 
 # Copy SDL2.dll to the executable directory after build
 add_custom_command(TARGET Learn_Opengl POST_BUILD

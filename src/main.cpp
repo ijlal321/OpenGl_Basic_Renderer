@@ -1,6 +1,7 @@
-#include <windows.h>
+// #include <windows.h>
+// #include <gl/GL.h>
+#include <glad/glad.h>
 #include <SDL.h>
-#include <gl/GL.h>
 #include <iostream>
 
 #include "Screen.h"
