@@ -15,6 +15,7 @@ add_executable(Learn_Opengl
             src/main.cpp
             src/Screen.cpp
             src/Input.cpp
+            src/Shader.cpp
             )
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
@@ -23,7 +24,6 @@ target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
 ## Adding Glad Files for Opengl Extensions
 # ==========================================
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include)
-# target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/external/include/KHR)
 target_sources(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
 
 

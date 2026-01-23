@@ -6,10 +6,12 @@
 
 #include "Screen.h"
 #include "Input.h"
+#include "Shader.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
 Input * input = Input::Instance();
+Shader * shader = Shader::Instance();
 
 
 int main(int argc, char* argv[]){
@@ -18,6 +20,17 @@ int main(int argc, char* argv[]){
 
     // =================================
     
+
+    shader->CreateProgram();
+    shader->CreateShaders();
+
+    // Path relative to exe file.
+    shader->CompileShaders("../../Shaders/Main.vert", Shader::ShaderType::VERTEX_SHADER);
+    shader->CompileShaders("../../Shaders/Main.frag", Shader::ShaderType::FRAGMENT_SHADER);
+
+    shader->AttachShaders();
+    shader->LinkProgram();
+
     float x_pos = 0;
     float y_pos = 0;
 
@@ -77,6 +90,10 @@ int main(int argc, char* argv[]){
     }
     
     // =================================
+
+    shader->DetachShaders();
+    shader->DestroyShaders();
+    shader->DestroyProgram();
 
     screen->Shutdown();
     return 0;
