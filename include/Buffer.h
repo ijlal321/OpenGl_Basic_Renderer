@@ -1,5 +1,6 @@
 #pragma once
-#include "glad.h"
+#include <glad/glad.h>
+#include <string>
 
 class Buffer
 {
@@ -21,6 +22,28 @@ public:
 
 public:
 
-    void CreateBuffer(GLuint totalVertices, bool hasEBO);
+    void CreateBuffer(GLuint totalVertices);
 
+    void FillVBO(VBOType vboType,
+                GLfloat* data,
+                GLsizeiptr bufferSize,
+                FillType fillType);
+
+    void LinkBuffer(const std :: string& attribute,
+                    VBOType vboType,
+                    ComponentType componentType,
+                    DataType dataType);
+
+    void Render(DrawType drawType);
+
+    void DestroyBuffer();
+
+private:
+
+    GLuint m_VAO;
+    GLuint m_vertexVBO;
+    GLuint m_colorVBO;
+    GLuint m_totalVertices;
+
+};
 

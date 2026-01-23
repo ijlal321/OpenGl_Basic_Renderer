@@ -1,5 +1,7 @@
 #pragma once
-#include "glad/glad.h"
+#include <glad/glad.h>
+#include "Buffer.h"
+
 class Quad
 {
 
@@ -10,10 +12,6 @@ public:
     void render();
 
 private:
+    Buffer m_buffer;
 
-    GLuint m_VAO;
-    GLuint m_vertexVBO;
-    GLuint m_colorVBO;
-    GLint m_colorID;
-    GLint m_vertexID;
 };
