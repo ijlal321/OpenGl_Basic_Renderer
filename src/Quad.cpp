@@ -49,18 +49,25 @@ void Quad::render()
 void Quad::update()
 {
     if (Input::Instance()->IsKeyPressed()) {
-    char key_pressed = Input::Instance()->GetKeyDown();
-    if (key_pressed == SDLK_a){
-        m_position.x -= 0.001f;
-    }
-    else if (key_pressed == SDLK_d){
-        m_position.x += 0.001f;
-    }
-    else if (key_pressed == SDLK_s){
-        m_position.y -= 0.001f;
-    }
-    else if (key_pressed == SDLK_w){
-        m_position.y += 0.001f;
+        char key_pressed = Input::Instance()->GetKeyDown();
+        if (key_pressed == SDLK_j){
+            m_position.x -= 0.001f;
+        }
+        else if (key_pressed == SDLK_l){
+            m_position.x += 0.001f;
+        }
+        else if (key_pressed == SDLK_k){
+            m_position.y -= 0.001f;
+        }
+        else if (key_pressed == SDLK_i){
+            m_position.y += 0.001f;
+        }
+        else if (key_pressed == SDLK_u){
+            m_position.z -= 0.001f;
+        }
+        else if (key_pressed == SDLK_o){
+            m_position.z += 0.001f;
+        }
     }
 
 
@@ -68,5 +75,5 @@ void Quad::update()
     m_model = glm::translate(m_model, m_position);
     // m_model = glm::rotate(m_model, glm::radians(45.0f), glm::vec3(0, 0, 1));
     // m_model = glm::scale(m_model, glm::vec3(0.5f, 0.5f, 1.0f));
-}
+
 }

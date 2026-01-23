@@ -5,8 +5,11 @@ in vec3 colorIn;
 out vec3 colorOut;
 
 uniform mat4 model;
+uniform mat4 view;
+uniform mat4 proj;
 
 void main(){
     colorOut = colorIn;
-    gl_Position = model * vec4(vertexIn, 1.0);
+    // order of multiuplication is reverse. from right to left. view is in last, as needed.
+    gl_Position = proj * view * model * vec4(vertexIn, 1.0);
 }

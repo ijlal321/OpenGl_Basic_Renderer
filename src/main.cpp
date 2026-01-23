@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Shader.h"
 #include "Quad.h"
+#include "Camera.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
@@ -37,7 +38,8 @@ int main(int argc, char* argv[]){
 
     //=======================================
     Quad quad;
-    
+    Camera camera;
+    camera.Set3dView();
 
     while (isAppRunning){
 
@@ -53,6 +55,7 @@ int main(int argc, char* argv[]){
             } 
         }
 
+        camera.Update();
         quad.update();
         quad.render();
         screen->Present();
