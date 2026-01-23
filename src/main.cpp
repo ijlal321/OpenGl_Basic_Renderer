@@ -48,22 +48,12 @@ int main(int argc, char* argv[]){
         isAppRunning = !input->IsXClicked();
         if (input->IsKeyPressed()) {
             char key_pressed = input->GetKeyDown();
-            if (key_pressed == SDLK_a){
-                x_pos -= 0.001f;
-            }
-            else if (key_pressed == SDLK_d){
-                x_pos += 0.001f;
-            }
-            else if (key_pressed == SDLK_s){
-                y_pos -= 0.001f;
-            }
-            else if (key_pressed == SDLK_w){
-                y_pos += 0.001f;
-            }
-            else if (key_pressed == SDLK_ESCAPE){
+            if (key_pressed == SDLK_ESCAPE){
                 isAppRunning = false;
             } 
         }
+
+        quad.update();
         quad.render();
         screen->Present();
         
