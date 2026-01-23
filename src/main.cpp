@@ -7,6 +7,7 @@
 #include "Screen.h"
 #include "Input.h"
 #include "Shader.h"
+#include "Quad.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
@@ -35,52 +36,8 @@ int main(int argc, char* argv[]){
     float y_pos = 0;
 
     //=======================================
-
-    //data that represents vertices for quad
-    GLfloat vertices[] = { -1.0f,  1.0f,  0.0f,
-                            1.0f,  1.0f,  0.0f,
-                           -1.0f, -1.0f,  0.0f,     //triangle 1
-
-                           -1.0f, -1.0f,  0.0f,
-                            1.0f,  1.0f,  0.0f,
-                            1.0f, -1.0f,  0.0f };   //triangle 2
-
-    //data that represents colors for quad
-    GLfloat colors[]={  0.0f,  0.0f,  1.0f,
-                        0.0f,  0.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f,     //triangle 1
- 
-                        1.0f,  1.0f,  1.0f,
-                        0.0f,  0.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f };      //triangle 2
-
-
-    GLuint shaderProgramID = shader->GetShaderProgramID();
-
-    GLint vertexID = glGetAttribLocation(shaderProgramID, "vertexIn");
-    GLint colorID = glGetAttribLocation(shaderProgramID, "colorIn");
-
-    GLuint vertexVBO;
-    GLuint colorVBO;
-    glGenBuffers(1, &vertexVBO);
-    glGenBuffers(1, &colorVBO);
-
-    GLuint VAO;
-    glGenVertexArrays(1, &VAO);
-
-    glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(vertexID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-        glEnableVertexAttribArray(vertexID);
-
-        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-        glVertexAttribPointer(colorID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-        glEnableVertexAttribArray(colorID);
-
-    glBindVertexArray(0);
+    Quad quad;
+    
 
     while (isAppRunning){
 
@@ -107,24 +64,12 @@ int main(int argc, char* argv[]){
                 isAppRunning = false;
             } 
         }
-
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
+        quad.render();
         screen->Present();
         
     }
     
     // =================================
-
-
-    glDeleteBuffers(1, &vertexVBO);
-    glDeleteBuffers(1, &colorVBO);
-    glDeleteVertexArrays(1, &VAO);
-
-    glDisableVertexAttribArray(vertexID);
-    glDisableVertexAttribArray(colorID);
-
 
     shader->DetachShaders();
     shader->DestroyShaders();
