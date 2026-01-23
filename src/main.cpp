@@ -65,15 +65,22 @@ int main(int argc, char* argv[]){
     glGenBuffers(1, &vertexVBO);
     glGenBuffers(1, &colorVBO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(vertexID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(vertexID);
+    GLuint VAO;
+    glGenVertexArrays(1, &VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-    glVertexAttribPointer(colorID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(colorID);
+    glBindVertexArray(VAO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glVertexAttribPointer(vertexID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+        glEnableVertexAttribArray(vertexID);
+
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+        glVertexAttribPointer(colorID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+        glEnableVertexAttribArray(colorID);
+
+    glBindVertexArray(0);
 
     while (isAppRunning){
 
@@ -101,17 +108,23 @@ int main(int argc, char* argv[]){
             } 
         }
 
-
-       glDrawArrays(GL_TRIANGLES, 0, 6);
-
-
-
-
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
         screen->Present();
         
     }
     
     // =================================
+
+
+    glDeleteBuffers(1, &vertexVBO);
+    glDeleteBuffers(1, &colorVBO);
+    glDeleteVertexArrays(1, &VAO);
+
+    glDisableVertexAttribArray(vertexID);
+    glDisableVertexAttribArray(colorID);
+
 
     shader->DetachShaders();
     shader->DestroyShaders();
