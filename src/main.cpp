@@ -34,6 +34,47 @@ int main(int argc, char* argv[]){
     float x_pos = 0;
     float y_pos = 0;
 
+    //=======================================
+
+    //data that represents vertices for quad
+    GLfloat vertices[] = { -0.5f,  0.5f,  0.0f,
+                            0.5f,  0.5f,  0.0f,
+                           -0.5f, -0.5f,  0.0f,     //triangle 1
+
+                           -0.5f, -0.5f,  0.0f,
+                            0.5f,  0.5f,  0.0f,
+                            0.5f, -0.5f,  0.0f };   //triangle 2
+
+    //data that represents colors for quad
+    GLfloat colors[]={  1.0f,  0.0f,  0.0f,
+                        0.0f,  0.0f,  1.0f,
+                        0.0f,  1.0f,  1.0f,     //triangle 1
+ 
+                        0.0f,  1.0f,  1.0f,
+                        0.0f,  0.0f,  1.0f,
+                        0.0f,  1.0f,  0.0f };      //triangle 2
+
+
+    GLuint shaderProgramID = shader->GetShaderProgramID();
+
+    GLint vertexID = glGetAttribLocation(shaderProgramID, "vertexIn");
+    GLint colorID = glGetAttribLocation(shaderProgramID, "colorIn");
+
+    GLuint vertexVBO;
+    GLuint colorVBO;
+    glGenBuffers(1, &vertexVBO);
+    glGenBuffers(1, &colorVBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(vertexID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(vertexID);
+
+    glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+    glVertexAttribPointer(colorID, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(colorID);
+
     while (isAppRunning){
 
         screen->ClearScreen();
@@ -61,26 +102,7 @@ int main(int argc, char* argv[]){
         }
 
 
-        //render a quad the OLD way
-        glBegin(GL_QUADS);
-
-            //top left color and vertex of quad
-            glColor3f(1, 0,0);
-            glVertex3f(x_pos - 0.5f, y_pos + 0.5f, 0.0f);
-
-            //top right color and vertex of quad
-            glColor3f(0,1,0);
-            glVertex3f(x_pos + 0.5f, y_pos + 0.5f, 0.0f);
-
-            //bottom right color and vertex of quad
-            glColor3f(0,0,1);
-            glVertex3f(x_pos + 0.5f, y_pos  - 0.5f, 0.0f);
-
-            //bottom left color and vertex of quad
-            glColor3f(0,0,1);
-            glVertex3f(x_pos - 0.5f, y_pos  - 0.5f, 0.0f);
-
-        glEnd();
+       glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
 

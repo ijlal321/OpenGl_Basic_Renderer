@@ -40,6 +40,11 @@ bool Shader::CreateShaders()
     return true;
 }
 
+GLuint Shader::GetShaderProgramID()
+{
+    return m_shaderProgramID;
+}
+
 bool Shader::CompileShaders(const std::string &filename, ShaderType shaderType)
 {
     std::fstream file;
@@ -135,4 +140,72 @@ void Shader::DestroyShaders()
 void Shader::DestroyProgram()
 {
     glDeleteProgram(m_shaderProgramID);
+}
+
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLint data){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform1i(ID, data);
+    return true;
+}
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLuint data){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform1ui(ID, data);
+    return true;
+}
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLfloat data){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform1f(ID, data);
+    return true;
+}
+
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLfloat x, GLfloat y){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform2f(ID, x, y);
+    return true;
+}
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLfloat x, GLfloat y, GLfloat z){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform3i(ID, x, y, z);
+    return true;
+}
+
+bool Shader::SendUniformData(const std :: string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w){
+    GLint ID = glGetUniformLocation(m_shaderProgramID, uniformName.c_str());
+
+    if (ID == -1){
+        std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
+        return false;
+    }
+    glUniform4i(ID, x, y, z, w);
+    return true;
 }
