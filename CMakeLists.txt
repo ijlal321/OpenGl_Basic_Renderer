@@ -44,3 +44,8 @@ add_custom_command(TARGET Learn_Opengl POST_BUILD
         "${SDL2_dir}/lib/x64/SDL2.dll"
         $<TARGET_FILE_DIR:Learn_Opengl>
 )
+
+
+## Adding Glad Files for GML Library
+# ==========================================
+target_include_directories(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/GLM)
