@@ -37,22 +37,22 @@ int main(int argc, char* argv[]){
     //=======================================
 
     //data that represents vertices for quad
-    GLfloat vertices[] = { -0.5f,  0.5f,  0.0f,
-                            0.5f,  0.5f,  0.0f,
-                           -0.5f, -0.5f,  0.0f,     //triangle 1
+    GLfloat vertices[] = { -1.0f,  1.0f,  0.0f,
+                            1.0f,  1.0f,  0.0f,
+                           -1.0f, -1.0f,  0.0f,     //triangle 1
 
-                           -0.5f, -0.5f,  0.0f,
-                            0.5f,  0.5f,  0.0f,
-                            0.5f, -0.5f,  0.0f };   //triangle 2
+                           -1.0f, -1.0f,  0.0f,
+                            1.0f,  1.0f,  0.0f,
+                            1.0f, -1.0f,  0.0f };   //triangle 2
 
     //data that represents colors for quad
-    GLfloat colors[]={  1.0f,  0.0f,  0.0f,
+    GLfloat colors[]={  0.0f,  0.0f,  1.0f,
                         0.0f,  0.0f,  1.0f,
-                        0.0f,  1.0f,  1.0f,     //triangle 1
+                        1.0f,  1.0f,  1.0f,     //triangle 1
  
-                        0.0f,  1.0f,  1.0f,
+                        1.0f,  1.0f,  1.0f,
                         0.0f,  0.0f,  1.0f,
-                        0.0f,  1.0f,  0.0f };      //triangle 2
+                        1.0f,  1.0f,  1.0f };      //triangle 2
 
 
     GLuint shaderProgramID = shader->GetShaderProgramID();
