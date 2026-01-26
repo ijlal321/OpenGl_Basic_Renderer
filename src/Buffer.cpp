@@ -51,7 +51,7 @@ void Buffer::LinkBuffer(const std::string &attribute, VBOType vboType, Component
         {
             glBindBuffer(GL_ARRAY_BUFFER, m_colorVBO);    
         }
-        glVertexAttribPointer(ID, componentType, GL_FLOAT, GL_FALSE, 0, nullptr);
+        glVertexAttribPointer(ID, componentType, dataType, GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(ID);
 
     glBindVertexArray(0);
