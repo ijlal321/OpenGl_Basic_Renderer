@@ -9,6 +9,7 @@ Texture::Texture()
 
 void Texture::Bind()
 {
+    glBindTexture(GL_TEXTURE_2D, m_ID);
 }
 
 bool Texture::Load(const std::string &filename)
@@ -18,6 +19,7 @@ bool Texture::Load(const std::string &filename)
     if (!textureData)
     {
         std::cout << "Error loading texture." << std::endl;
+        return false;
     }
 
     GLsizei width = textureData->w;

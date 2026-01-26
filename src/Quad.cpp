@@ -16,21 +16,34 @@ Quad::Quad()
                             0.5f, -0.5f,  0.0f };   //triangle 2
 
     //data that represents colors for quad
-    GLfloat colors[]={  0.0f,  0.0f,  1.0f,
-                        0.0f,  0.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f,     //triangle 1
- 
+    GLfloat colors[]={  1.0f,  1.0f,  1.0f,
                         1.0f,  1.0f,  1.0f,
-                        0.0f,  0.0f,  1.0f,
+                        1.0f,  1.0f,  1.0f,     //triangle 1
+                        1.0f,  1.0f,  1.0f,
+                        1.0f,  1.0f,  1.0f,
                         1.0f,  1.0f,  1.0f };      //triangle 2
 
+    //data that represents UV coordinates for quad
+    GLfloat UVs[] = {
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f, //triangle 1
+
+        0.0f, 0.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f  //triangle 2
+        }; 
     
         m_buffer.CreateBuffer(6);
         m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
         m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
+        m_buffer.FillVBO(Buffer::TEXTURE_BUFFER, UVs, sizeof(UVs), Buffer::SINGLE);
 
         m_buffer.LinkBuffer("vertexIn", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
         m_buffer.LinkBuffer("colorIn", Buffer::COLOR_BUFFER, Buffer::RGB, Buffer::FLOAT);
+        m_buffer.LinkBuffer("textureIn", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
+
+        m_texture.Load("../../Textures/crate_1.png");
 
         m_position = glm::vec3(0,0,0); // make sure starting position is always 0,0,0
 }
@@ -43,7 +56,9 @@ Quad::~Quad()
 void Quad::render()
 {
     Shader::Instance()->SendUniformData("model", m_model);
+    m_texture.Bind();
     m_buffer.Render(Buffer::TRIANGLES);
+    m_texture.Unbind();
 }
 
 void Quad::update()
