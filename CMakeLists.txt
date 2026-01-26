@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ##  Variables Definition
 # ==========================================
 set(SDL2_dir "${CMAKE_SOURCE_DIR}/external/SDL2")
+set(SDL2_image_dir "${CMAKE_SOURCE_DIR}/external/SDL2_image_2.0")
 
 
 ##  Main Project Files
@@ -50,3 +51,22 @@ add_custom_command(TARGET Learn_Opengl POST_BUILD
 ## Adding Glad Files for GML Library
 # ==========================================
 target_include_directories(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/GLM)
+
+## Adding SDL2_image 2.0 Files for Loading Textures
+# ==========================================
+target_include_directories(Learn_Opengl PRIVATE ${SDL2_image_dir}/include)
+
+target_link_libraries(Learn_Opengl PUBLIC 
+            ${SDL2_image_dir}/lib/x64/SDL2_image.lib
+            )
+
+# Copy all SDL2_image dll's to the executable directory after build
+file(GLOB MYLIB_DLLS
+    "${SDL2_image_dir}/lib/x64/*.dll"
+)
+
+add_custom_command(TARGET Learn_Opengl POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${MYLIB_DLLS}
+        $<TARGET_FILE_DIR:Learn_Opengl>
+)
