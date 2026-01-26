@@ -20,6 +20,7 @@ add_executable(Learn_Opengl
             src/Quad.cpp
             src/Buffer.cpp
             src/Camera.cpp
+            src/Texture.cpp
             )
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
