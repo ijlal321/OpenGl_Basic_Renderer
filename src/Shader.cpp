@@ -195,7 +195,7 @@ bool Shader::SendUniformData(const std :: string& uniformName, GLfloat x, GLfloa
         std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
         return false;
     }
-    glUniform3i(ID, x, y, z);
+    glUniform3f(ID, x, y, z);
     return true;
 }
 
@@ -206,7 +206,7 @@ bool Shader::SendUniformData(const std :: string& uniformName, GLfloat x, GLfloa
         std::cout << "Shader variable " << uniformName << " not found or not used." << std :: endl;
         return false;
     }
-    glUniform4i(ID, x, y, z, w);
+    glUniform4f(ID, x, y, z, w);
     return true;
 }
 

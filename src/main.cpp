@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Quad.h"
 #include "Camera.h"
+#include "Light.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
@@ -41,6 +42,8 @@ int main(int argc, char* argv[]){
     Camera camera;
     camera.Set3dView();
 
+    Light light;
+
     while (isAppRunning){
 
         screen->ClearScreen();
@@ -54,8 +57,12 @@ int main(int argc, char* argv[]){
                 isAppRunning = false;
             } 
         }
-
         camera.Update();
+
+        light.Update();    
+        light.Render();
+        light.SendToShader();
+
         quad.update();
         quad.render();
         screen->Present();
