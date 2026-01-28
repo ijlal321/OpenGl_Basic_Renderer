@@ -7,41 +7,37 @@
 Quad::Quad()
 {
     //data that represents vertices for quad
-    GLfloat vertices[] = { -0.5f,  0.5f,  0.0f,
-                            0.5f,  0.5f,  0.0f,
-                           -0.5f, -0.5f,  0.0f,     //triangle 1
-
-                           -0.5f, -0.5f,  0.0f,
-                            0.5f,  0.5f,  0.0f,
-                            0.5f, -0.5f,  0.0f };   //triangle 2
+    GLfloat vertices[] = { -0.5f,  0.5f, 0.0f,
+						    0.5f,  0.5f, 0.0f,
+						    0.5f, -0.5f, 0.0f,
+					       -0.5f, -0.5f, 0.0f  };
 
     //data that represents colors for quad
-    GLfloat colors[]={  1.0f,  1.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f,     //triangle 1
-                        1.0f,  1.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f,
-                        1.0f,  1.0f,  1.0f };      //triangle 2
+    GLfloat colors[]= { 1.0f, 0.0f, 0.0f,
+					     0.0f, 0.0f, 1.0f,
+					     0.0f, 1.0f, 0.0f,
+					     0.0f, 1.0f, 1.0f  };    //triangle 2
 
     //data that represents UV coordinates for quad
-    GLfloat UVs[] = {
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        0.0f, 0.0f, //triangle 1
+    GLfloat UVs[] = { 0.0f, 1.0f,
+					  1.0f, 1.0f,
+					  1.0f, 0.0f,
+					  0.0f, 0.0f };
 
-        0.0f, 0.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f  //triangle 2
-        }; 
+	//our index buffer to control the rendering
+	GLuint indices[] = { 0, 1, 3,
+					     3, 1, 2 };
     
-    m_buffer.CreateBuffer(6);
+    m_buffer.CreateBuffer(6, true);
+	m_buffer.FillEBO(indices, sizeof(indices), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::COLOR_BUFFER, colors, sizeof(colors), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::TEXTURE_BUFFER, UVs, sizeof(UVs), Buffer::FillType::Once);
 
-    m_buffer.LinkBuffer("vertexIn", Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
-    m_buffer.LinkBuffer("colorIn", Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
-    m_buffer.LinkBuffer("textureIn", Buffer::VBOType::TEXTURE_BUFFER, Buffer::ComponentType::UV, Buffer::DataType::FLOAT);
+    m_buffer.LinkEBO();
+    m_buffer.LinkVBO("vertexIn", Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
+    m_buffer.LinkVBO("colorIn", Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
+    m_buffer.LinkVBO("textureIn", Buffer::VBOType::TEXTURE_BUFFER, Buffer::ComponentType::UV, Buffer::DataType::FLOAT);
 
     m_texture.Load("../../Textures/crate_1.png");
 

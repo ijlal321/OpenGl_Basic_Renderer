@@ -20,8 +20,8 @@ Light::Light()
     m_buffer.FillVBO(Buffer::VBOType::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::COLOR_BUFFER, colors, sizeof(colors), Buffer::FillType::Once);
 
-    m_buffer.LinkBuffer("vertexIn", Buffer :: Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
-    m_buffer.LinkBuffer("colorIn", Buffer :: Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
+    m_buffer.LinkVBO("vertexIn", Buffer :: Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
+    m_buffer.LinkVBO("colorIn", Buffer :: Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
 }
 
 Light::~Light()

@@ -22,14 +22,17 @@ public:
 
 public:
 
-    void CreateBuffer(GLuint totalVertices);
-
+    void CreateBuffer(GLuint totalVertices, bool hasEBO = false);
+	void FillEBO(const GLuint* data,
+		GLsizeiptr bufferSize, 
+        FillType fill = FillType::Once);
     void FillVBO(VBOType vboType,
                 GLfloat* data,
                 GLsizeiptr bufferSize,
                 FillType fillType);
 
-    void LinkBuffer(const std :: string& attribute,
+    void LinkEBO();
+    void LinkVBO(const std :: string& attribute,
                     VBOType vboType,
                     ComponentType componentType,
                     DataType dataType);
@@ -40,7 +43,10 @@ public:
 
 private:
 
+    bool m_hasEBO;
+    
     GLuint m_VAO;
+    GLuint m_EBO;
     GLuint m_vertexVBO;
     GLuint m_colorVBO;
     GLuint m_textureVBO;
