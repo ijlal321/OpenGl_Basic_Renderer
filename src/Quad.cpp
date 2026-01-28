@@ -35,13 +35,13 @@ Quad::Quad()
         }; 
     
     m_buffer.CreateBuffer(6);
-    m_buffer.FillVBO(Buffer::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::SINGLE);
-    m_buffer.FillVBO(Buffer::COLOR_BUFFER, colors, sizeof(colors), Buffer::SINGLE);
-    m_buffer.FillVBO(Buffer::TEXTURE_BUFFER, UVs, sizeof(UVs), Buffer::SINGLE);
+    m_buffer.FillVBO(Buffer::VBOType::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::FillType::Once);
+    m_buffer.FillVBO(Buffer::VBOType::COLOR_BUFFER, colors, sizeof(colors), Buffer::FillType::Once);
+    m_buffer.FillVBO(Buffer::VBOType::TEXTURE_BUFFER, UVs, sizeof(UVs), Buffer::FillType::Once);
 
-    m_buffer.LinkBuffer("vertexIn", Buffer::VERTEX_BUFFER, Buffer::XYZ, Buffer::FLOAT);
-    m_buffer.LinkBuffer("colorIn", Buffer::COLOR_BUFFER, Buffer::RGB, Buffer::FLOAT);
-    m_buffer.LinkBuffer("textureIn", Buffer::TEXTURE_BUFFER, Buffer::UV, Buffer::FLOAT);
+    m_buffer.LinkBuffer("vertexIn", Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
+    m_buffer.LinkBuffer("colorIn", Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
+    m_buffer.LinkBuffer("textureIn", Buffer::VBOType::TEXTURE_BUFFER, Buffer::ComponentType::UV, Buffer::DataType::FLOAT);
 
     m_texture.Load("../../Textures/crate_1.png");
 
@@ -70,7 +70,7 @@ void Quad::render()
     Shader::Instance()->SendUniformData("material.specular", m_specular.r, m_specular.g, m_specular.b);
 
     m_texture.Bind();
-    m_buffer.Render(Buffer :: TRIANGLES);
+    m_buffer.Render(Buffer :: DrawType :: TRIANGLES);
     m_texture.Unbind();
 }
 
