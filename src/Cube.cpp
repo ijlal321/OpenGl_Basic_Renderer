@@ -140,8 +140,8 @@ void Cube::Update()
 {
 	if (Input::Instance()->IsLeftButtonClicked())
 	{
-		m_rotation.x += Input::Instance()->GetMouseMotionY();
-		m_rotation.y += Input::Instance()->GetMouseMotionX();
+		m_rotation.x += (Input::Instance()->GetMouseMotionY() / 30.0f);
+		m_rotation.y += (Input::Instance()->GetMouseMotionX() / 30.0f);
 	}
 
 	m_model = glm::mat4(1.0f);
