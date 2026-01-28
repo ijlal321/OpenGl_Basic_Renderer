@@ -18,6 +18,12 @@ Quad::Quad()
 					     0.0f, 1.0f, 0.0f,
 					     0.0f, 1.0f, 1.0f  };    //triangle 2
 
+	//data that represents normals for quad
+	GLfloat normals[] = { 0.0f, 0.0f, 1.0f,
+						  0.0f, 0.0f, 1.0f,
+						  0.0f, 0.0f, 1.0f,
+						  0.0f, 0.0f, 1.0f };
+
     //data that represents UV coordinates for quad
     GLfloat UVs[] = { 0.0f, 1.0f,
 					  1.0f, 1.0f,
@@ -33,11 +39,13 @@ Quad::Quad()
     m_buffer.FillVBO(Buffer::VBOType::VERTEX_BUFFER, vertices, sizeof(vertices), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::COLOR_BUFFER, colors, sizeof(colors), Buffer::FillType::Once);
     m_buffer.FillVBO(Buffer::VBOType::TEXTURE_BUFFER, UVs, sizeof(UVs), Buffer::FillType::Once);
+	m_buffer.FillVBO(Buffer::VBOType::NormalBuffer, normals, sizeof(normals), Buffer::FillType::Once);
 
     m_buffer.LinkEBO();
     m_buffer.LinkVBO("vertexIn", Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
     m_buffer.LinkVBO("colorIn", Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
     m_buffer.LinkVBO("textureIn", Buffer::VBOType::TEXTURE_BUFFER, Buffer::ComponentType::UV, Buffer::DataType::FLOAT);
+	m_buffer.LinkVBO("normalIn", Buffer::VBOType::NormalBuffer, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
 
     m_texture.Load("../../Textures/crate_1.png");
 
@@ -57,6 +65,8 @@ Quad::~Quad()
 void Quad::render()
 {
     Shader::Instance()->SendUniformData("model", m_model);
+	Shader::Instance()->SendUniformData("normal", m_normal);
+
     Shader::Instance()->SendUniformData("isLit", true);
     Shader::Instance()->SendUniformData("isTextured", true);
 
@@ -97,7 +107,8 @@ void Quad::update()
 
     m_model = glm::mat4(1.0f); // Identity Matrix
     m_model = glm::translate(m_model, m_position);
-    m_model = glm::rotate(m_model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    m_model = glm::rotate(m_model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     // m_model = glm::scale(m_model, glm::vec3(0.5f, 0.5f, 1.0f));
+	m_normal = glm::inverse(glm::mat3(m_model));
 
 }

@@ -37,6 +37,7 @@ public:
     bool SendUniformData(const std :: string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 
     bool SendUniformData(const std :: string& uniformName, const glm::mat4& data);
+	bool SendUniformData(const std::string& uniformName, const glm::mat3& data);
 
 private:
 

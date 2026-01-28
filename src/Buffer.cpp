@@ -24,6 +24,7 @@ void Buffer::CreateBuffer(GLuint totalVertices, bool hasEBO)
     glGenBuffers(1, &m_vertexVBO);
     glGenBuffers(1, &m_colorVBO);
     glGenBuffers(1, &m_textureVBO);
+	glGenBuffers(1, &m_normalVBO);
     glGenVertexArrays(1, &m_VAO);
 
 	if (hasEBO)
@@ -47,9 +48,13 @@ void Buffer::FillVBO(VBOType vboType, GLfloat *data, GLsizeiptr bufferSize, Fill
             {
                 glBindBuffer(GL_ARRAY_BUFFER, m_colorVBO);    
             }
+            else if (vboType == VBOType::TEXTURE_BUFFER)
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, m_textureVBO);
+            }
             else
             {
-                glBindBuffer(GL_ARRAY_BUFFER, m_textureVBO);    
+    			glBindBuffer(GL_ARRAY_BUFFER, m_normalVBO);
             }
             glBufferData(GL_ARRAY_BUFFER, bufferSize, data, static_cast<GLenum>(fillType));
 
@@ -79,9 +84,13 @@ void Buffer::LinkVBO(const std::string &attribute, VBOType vboType, ComponentTyp
         {
             glBindBuffer(GL_ARRAY_BUFFER, m_colorVBO);    
         }
+        else if (vboType == VBOType::TEXTURE_BUFFER)
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, m_textureVBO);
+        }
         else
         {
-            glBindBuffer(GL_ARRAY_BUFFER, m_textureVBO);    
+            glBindBuffer(GL_ARRAY_BUFFER, m_normalVBO);
         }
         glVertexAttribPointer(ID, static_cast<GLint>(componentType), static_cast<GLenum>(dataType), GL_FALSE, 0, nullptr);
         glEnableVertexAttribArray(ID);

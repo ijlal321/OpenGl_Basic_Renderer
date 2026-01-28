@@ -22,6 +22,7 @@ add_executable(Learn_Opengl
             src/Camera.cpp
             src/Texture.cpp
             src/Light.cpp
+            src/Cube.cpp
             )
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)

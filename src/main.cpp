@@ -10,6 +10,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Cube.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
@@ -39,6 +40,7 @@ int main(int argc, char* argv[]){
 
     //=======================================
     Quad quad;
+	Cube cube;
     Camera camera;
     camera.Set3dView();
 
@@ -63,8 +65,12 @@ int main(int argc, char* argv[]){
         light.Render();
         light.SendToShader();
 
-        quad.update();
-        quad.render();
+        // quad.update();
+        // quad.render();
+
+        cube.Update();
+		cube.Render();
+        
         screen->Present();
         
     }
