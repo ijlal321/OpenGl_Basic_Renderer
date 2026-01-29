@@ -1,6 +1,6 @@
 // #include <windows.h>
 // #include <gl/GL.h>
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <SDL.h>
 #include <iostream>
 
@@ -9,13 +9,13 @@
 #include "Shader.h"
 #include "Quad.h"
 #include "Camera.h"
+#include "Model.h"
 #include "Light.h"
 #include "Cube.h"
 
 bool isAppRunning = true;
 Screen * screen = Screen::Instance();
 Input * input = Input::Instance();
-Shader * shader = Shader::Instance();
 
 
 int main(int argc, char* argv[]){
@@ -24,27 +24,24 @@ int main(int argc, char* argv[]){
 
     // =================================
     
+	Shader lightShader;
+	lightShader.Create("../../Shaders/Main.vert", "../../Shaders/Main.frag");
+	lightShader.Use();
 
-    shader->CreateProgram();
-    shader->CreateShaders();
+	float xPos = 0.0f;
+	float yPos = 0.0f;
 
-    // Path relative to exe file.
-    shader->CompileShaders("../../Shaders/Main.vert", Shader::ShaderType::VERTEX_SHADER);
-    shader->CompileShaders("../../Shaders/Main.frag", Shader::ShaderType::FRAGMENT_SHADER);
+	//================================================================
 
-    shader->AttachShaders();
-    shader->LinkProgram();
-
-    float x_pos = 0;
-    float y_pos = 0;
-
-    //=======================================
-    Quad quad;
+	Quad quad;
 	Cube cube;
-    Camera camera;
-    camera.Set3dView();
+	Model model;
+	model.Load("../../Models/Armchair.obj");
 
-    Light light;
+	Camera camera;
+	camera.Set3DView();
+
+	Light light;
 
     while (isAppRunning){
 
@@ -60,16 +57,24 @@ int main(int argc, char* argv[]){
             } 
         }
         camera.Update();
+		camera.SendToShader(lightShader);
+
+        light.Update();
+		light.Render(lightShader);
+		light.SendToShader(lightShader);
 
         light.Update();    
-        light.Render();
-        light.SendToShader();
+        light.Render(lightShader);
+        light.SendToShader(lightShader);
 
-        // quad.update();
-        // quad.render();
+		//quad.Update();
+		//quad.Render(lightShader);
 
-        cube.Update();
-		cube.Render();
+		//cube.Update();
+		//cube.Render(lightShader);
+
+		model.Update();
+		model.Render(lightShader);
         
         screen->Present();
         
@@ -77,9 +82,7 @@ int main(int argc, char* argv[]){
     
     // =================================
 
-    shader->DetachShaders();
-    shader->DestroyShaders();
-    shader->DestroyProgram();
+    lightShader.Destroy();	
 
     screen->Shutdown();
     return 0;

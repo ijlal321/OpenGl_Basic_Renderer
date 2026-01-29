@@ -1,6 +1,8 @@
 #pragma once
-#include <glad/glad.h>
+
+#include "glad/gl.h"
 #include <string>
+#include "Shader.h"
 
 class Buffer
 {
@@ -32,7 +34,8 @@ public:
                 FillType fillType);
 
     void LinkEBO();
-    void LinkVBO(const std :: string& attribute,
+    void LinkVBO(const Shader& shader,
+                    const std :: string& attribute,
                     VBOType vboType,
                     ComponentType componentType,
                     DataType dataType);

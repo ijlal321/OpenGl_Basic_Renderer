@@ -2,7 +2,7 @@
 
 // #include <windows.h>
 // #include <gl/GL.h>
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <SDL.h>
 
 class Screen {

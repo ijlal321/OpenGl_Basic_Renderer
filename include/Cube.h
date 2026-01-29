@@ -13,7 +13,7 @@ public:
 	~Cube();
 
 	void Update();
-	void Render();
+	void Render(const Shader& shader);
 
 private:
 

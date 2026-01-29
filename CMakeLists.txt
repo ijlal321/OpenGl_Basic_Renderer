@@ -23,6 +23,9 @@ add_executable(Learn_Opengl
             src/Texture.cpp
             src/Light.cpp
             src/Cube.cpp
+            src/Utility.cpp
+            src/Model.cpp
+            src/Material.cpp
             )
 
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
@@ -31,7 +34,7 @@ target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/include)
 ## Adding Glad Files for Opengl Extensions
 # ==========================================
 target_include_directories(Learn_Opengl PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include)
-target_sources(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
+target_sources(Learn_Opengl PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/src/gl.c)
 
 
 ##  Installing SDL2 and Linking Opengl 

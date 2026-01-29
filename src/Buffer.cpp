@@ -5,9 +5,12 @@ Buffer::Buffer()
 {
     m_VAO = 0;
     m_EBO = 0;
+
     m_vertexVBO = 0;
     m_colorVBO = 0;
     m_textureVBO = 0;
+	m_normalVBO = 0;
+
     m_totalVertices = 0;
 	m_hasEBO = false;
 }
@@ -69,9 +72,9 @@ void Buffer::LinkEBO()
 	glBindVertexArray(0);
 }
 
-void Buffer::LinkVBO(const std::string &attribute, VBOType vboType, ComponentType componentType, DataType dataType)
+void Buffer::LinkVBO(const Shader& shader, const std::string &attribute, VBOType vboType, ComponentType componentType, DataType dataType)
 {
-    GLuint shaderProgramID = Shader::Instance()->GetShaderProgramID();
+    GLuint shaderProgramID = shader.GetShaderProgramID();
     GLint ID = glGetAttribLocation(shaderProgramID, attribute.c_str());
         
     glBindVertexArray(m_VAO);
@@ -118,6 +121,7 @@ void Buffer::DestroyBuffer()
     glDeleteBuffers(1, &m_vertexVBO);
     glDeleteBuffers(1, &m_colorVBO);
     glDeleteBuffers(1, &m_textureVBO);
+	glDeleteBuffers(1, &m_normalVBO);
     glDeleteVertexArrays(1, &m_VAO);
 	glDeleteBuffers(1, &m_EBO);
 

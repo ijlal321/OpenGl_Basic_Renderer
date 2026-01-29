@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "glad/glad.h"
+#include "glad/gl.h"
 
 class Texture{
 
@@ -9,7 +9,7 @@ public:
 
     Texture();
 
-    void Bind();
+    void Bind() const;
     bool Load(const std :: string& filename);
     void Unbind();
     void Unload();

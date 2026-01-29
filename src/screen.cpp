@@ -53,7 +53,7 @@ bool Screen::Initialize()
         return false;
     }
 
-    if (!gladLoadGL()){
+    if (!gladLoaderLoadGL()){
         std::cout << "Error loading Glad Extensions for Opengl." << std :: endl;
         return false;
     }

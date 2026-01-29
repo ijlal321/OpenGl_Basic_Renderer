@@ -42,10 +42,6 @@ Quad::Quad()
 	m_buffer.FillVBO(Buffer::VBOType::NormalBuffer, normals, sizeof(normals), Buffer::FillType::Once);
 
     m_buffer.LinkEBO();
-    m_buffer.LinkVBO("vertexIn", Buffer::VBOType::VERTEX_BUFFER, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
-    m_buffer.LinkVBO("colorIn", Buffer::VBOType::COLOR_BUFFER, Buffer::ComponentType::RGB, Buffer::DataType::FLOAT);
-    m_buffer.LinkVBO("textureIn", Buffer::VBOType::TEXTURE_BUFFER, Buffer::ComponentType::UV, Buffer::DataType::FLOAT);
-	m_buffer.LinkVBO("normalIn", Buffer::VBOType::NormalBuffer, Buffer::ComponentType::XYZ, Buffer::DataType::FLOAT);
 
     m_texture.Load("../../Textures/crate_1.png");
 
@@ -62,18 +58,18 @@ Quad::~Quad()
     m_buffer.DestroyBuffer();
 }
 
-void Quad::render()
+void Quad::Render(const Shader& shader)
 {
-    Shader::Instance()->SendUniformData("model", m_model);
-	Shader::Instance()->SendUniformData("normal", m_normal);
+    shader.SendUniformData("model", m_model);
+	shader.SendUniformData("normal", m_normal);
 
-    Shader::Instance()->SendUniformData("isLit", true);
-    Shader::Instance()->SendUniformData("isTextured", true);
+    shader.SendUniformData("isLit", true);
+    shader.SendUniformData("isTextured", true);
 
-    Shader::Instance()->SendUniformData("material.shininess", m_shininess);
-    Shader::Instance()->SendUniformData("material.ambient", m_ambient.r, m_ambient.g, m_ambient.b);
-    Shader::Instance()->SendUniformData("material.diffuse", m_diffuse.r, m_diffuse.g, m_diffuse.b);
-    Shader::Instance()->SendUniformData("material.specular", m_specular.r, m_specular.g, m_specular.b);
+    shader.SendUniformData("material.shininess", m_shininess);
+    shader.SendUniformData("material.ambient", m_ambient.r, m_ambient.g, m_ambient.b);
+    shader.SendUniformData("material.diffuse", m_diffuse.r, m_diffuse.g, m_diffuse.b);
+    shader.SendUniformData("material.specular", m_specular.r, m_specular.g, m_specular.b);
 
     m_texture.Bind();
     m_buffer.Render(Buffer :: DrawType :: TRIANGLES);
